@@ -1,0 +1,65 @@
+Main Control Algorithm (System Menu):
+1. Start.
+2. Initialize a structure `patient` with necessary data fields (ID, Name, Age, etc.).
+3. Repeat the following steps until the user chooses to exit:
+   Display a menu with options: Add, View, Search, Delete, and Exit.
+   Input the user's choice.
+   If choice is 1: Call `addPatient()`.
+   If choice is 2: Call `viewPatients()`.
+   If choice is 3: Call `searchPatient()`.
+   If choice is 4: Call `deletePatient()`.
+   If choice is 5: Print "Exiting" and terminate the loop.
+   Else: Print "Invalid Choice."
+4. End.
+
+
+
+Sub-Algorithms for Operations:
+
+A. Adding a Patient (`addPatient`)
+
+1. Open the data file `patients.dat` in Append Binary (`ab`) mode.
+2. If file cannot be opened, display an error and return.
+3. Input all patient details (ID, Name, Age, Gender, Disease, Room, Doctor) from the user.
+4. Write the entire structure block to the file using `fwrite`.
+5. Close the file.
+6. Output a success message.
+
+B. Viewing All Patients (`viewPatients`)
+
+1. Open `patients.dat` in Read Binary (`rb`) mode.
+2. If file does not exist, display "No records found" and return.
+3. Print the table header for formatting.
+4. While records can be read from the file (`fread` returns 1):
+   Display the current record's fields in a formatted row.
+5. Close the file.
+
+C. Searching for a Patient (`searchPatient`)
+
+1. Open `patients.dat` in Read Binary (`rb`) mode.
+2. Input the `targetID` to search for.
+3. Initialize a flag `found = 0`.
+4. While records exist in the file:
+    Read the next record into a temporary structure.
+    If the record's ID equals `targetID`:
+    Display the patient details.
+  Set `found = 1` and Break the loop.
+5. If `found` is still 0, display "Patient not found."
+6. Close the file.
+
+D. Deleting a Patient (`deletePatient`)
+
+1. Open the source file `patients.dat` in **Read Binary (`rb`)** mode.
+2. Open a new temporary file `temp.dat` in **Write Binary (`wb`)** mode.
+3. Input the `targetID` to be deleted.
+4. Initialize a flag `found = 0`.
+5. While records exist in the source file:
+   Read a record.
+   If the record's ID equals `targetID`:
+   Set `found = 1` (Skip writing this record to the temp file).
+   Else:
+   Write this record into `temp.dat`.
+6. Close both files.
+7. Remove (delete) the original `patients.dat`.
+8. Rename `temp.dat` to `patients.dat`.
+9. Output status based on whether `found` is 1 or 0.
